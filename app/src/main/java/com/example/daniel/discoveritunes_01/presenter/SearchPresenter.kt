@@ -1,11 +1,13 @@
 package com.example.daniel.discoveritunes_01.presenter
 
 import android.content.Context
+import android.util.Log
 import com.example.daniel.discoveritunes_01.model.Result
-import com.example.daniel.discoveritunes_01.model.api.ApiClient
 import com.example.daniel.discoveritunes_01.model.api.ApiInterface
 import com.example.daniel.discoveritunes_01.view.search.SearchListContract
-import java.util.ArrayList
+import rx.android.schedulers.AndroidSchedulers
+import rx.schedulers.Schedulers
+import java.util.*
 
 /**
  * Created by Daniel on 5/27/17.
@@ -14,7 +16,7 @@ import java.util.ArrayList
 class SearchPresenter : SearchListContract.Presenter{
 
     var view : SearchListContract.View ?= null
-    private val items = ArrayList<Result>()
+    private val results = ArrayList<Result>()
 
     override fun addView(view: SearchListContract.View) {
         this.view = view
@@ -25,14 +27,23 @@ class SearchPresenter : SearchListContract.Presenter{
     }
 
     override fun getVideoList() {
-        val videosObservable =
+        val apiService = ApiInterface.create();
+        apiService.getSearch("jack+johnson", "") //TODO: Set default values
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe ({
+                    result ->
+                    Log.d("Result", "There are ${result.results.size} tracks in iTunes")
+                }, { error ->
+                    error.printStackTrace()
+                })
     }
 
-    override fun searchList(searchString: String) {
+    override fun searchList(term: String, entity : String) {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    override fun showDialog(context: Context) {
+    override fun showSpinner(context: Context) {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 }

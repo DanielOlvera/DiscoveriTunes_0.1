@@ -26,12 +26,6 @@ class ApiClient {
         }
         return retrofit
     }
-
-    fun createListObs(): Observable<ITunesResult> {
-        val retrofit = getClient()
-        val service = retrofit!!.create(ApiInterface::class.java!!)
-        return service.getSearch("", "")
-    }
 }
 
 //This is the expected URL to be generated:

@@ -20,8 +20,8 @@ interface SearchListContract {
     interface Presenter : BasePresenter<View> {
 
         fun getVideoList()
-        fun searchList(searchString: String)
-        fun showDialog(context: Context)
+        fun searchList(term: String, entity : String)
+        fun showSpinner(context: Context)
 
     }
 }

@@ -2,6 +2,7 @@ package com.example.daniel.discoveritunes_01.view.search;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
 import android.view.View;
@@ -14,8 +15,10 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.daniel.discoveritunes_01.R;
+import com.example.daniel.discoveritunes_01.injection.search.SearchComponent;
 import com.example.daniel.discoveritunes_01.model.Result;
 import com.example.daniel.discoveritunes_01.presenter.SearchPresenter;
+import com.example.daniel.discoveritunes_01.utils.SearchListAdapter;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -45,12 +48,15 @@ public class SearchActivity extends AppCompatActivity implements SearchListContr
     @Inject
     SearchPresenter searchPresenter;
 
+    private RecyclerView.LayoutManager layoutManager;
+    private List<Result> result;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
         ButterKnife.bind(this);
-
+        setupRecyclerView();
     }
 
     @Override
@@ -90,7 +96,14 @@ public class SearchActivity extends AppCompatActivity implements SearchListContr
         return super.onOptionsItemSelected(item);
     }
 
-    private void setupRecycler(){
+    private void setupRecyclerView(){
+        layoutManager = new LinearLayoutManager(getApplicationContext());
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setAdapter(new SearchListAdapter(result, R.layout.itunes_list_item, getApplicationContext()));
+    }
 
+    private void setupDaggerComponent(){
+        DaggerSearchComponent.create()
+                .inject(this);
     }
 }
