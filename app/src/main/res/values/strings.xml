@@ -4,4 +4,19 @@
     <string name="start_searchingBtn">Search</string>
     <string name="hint_searchBar">Start searching!</string>
     <string name="btn_searchBtn">Search</string>
+    <string name="trackname">Track name</string>
+    <string name="trackprice">Track price</string>
+    <string name="shortdescriptionkind">Short description</string>
+
+    <array name="entities_array">
+        <item>movie</item>
+        <item>album</item>
+        <item>allArtist</item>
+        <item>podcast</item>
+        <item>musicVideo</item>
+        <item>mix</item>
+        <item>audiobook</item>
+        <item>tvSeason</item>
+        <item>allTrack</item>
+    </array>
 </resources>
